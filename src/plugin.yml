@@ -1,0 +1,5 @@
+name: NuxKits
+
+main: com.bukkit.N4th4.NuxKits.NuxKits
+
+version: 1.0
