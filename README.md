@@ -1,6 +1,8 @@
 NuxKits
 =======
 
+NuxKits is a plugin that dispenses kits to players.
+
 Installation
 ------------
 
@@ -24,9 +26,7 @@ Example :
             BOW : 1
             ARROW : 128
 
-Materials can be find [here](http://javadoc.lukegb.com/Bukkit/d7/dd9/namespaceorg_1_1bukkit.html#ab7fa290bb19b9a830362aa88028ec80a)
-
-With negative numbers, the plugin will take the user's material. __Never__ use tabulations, only four spaces.
+Materials can be find [here](http://javadoc.lukegb.com/Bukkit/d7/dd9/namespaceorg_1_1bukkit.html#ab7fa290bb19b9a830362aa88028ec80a). With negative numbers, the plugin will take the user's material. __Never__ use tabulations, only four spaces.
 
 Available nodes :
 
