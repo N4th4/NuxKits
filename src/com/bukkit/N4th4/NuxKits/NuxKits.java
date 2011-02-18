@@ -26,10 +26,6 @@ public class NuxKits extends JavaPlugin {
     	NuxKitsPermissions.initialize(getServer());
     	
         PluginManager pm = getServer().getPluginManager();
-        /*pm.registerEvent(Event.Type.PLAYER_JOIN,  playerListener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_QUIT,  playerListener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_COMMAND,  playerListener, Priority.Normal, this);*/
-        pm.registerEvent(Event.Type.PLAYER_JOIN,  playerListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_COMMAND,  playerListener, Priority.Normal, this);
 
         PluginDescriptionFile pdfFile = this.getDescription();
@@ -44,7 +40,6 @@ public class NuxKits extends JavaPlugin {
             return false;
         }
     }
-
     public void setDebugging(final Player player, final boolean value) {
         debugees.put(player, value);
     }

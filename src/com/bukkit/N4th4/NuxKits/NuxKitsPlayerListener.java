@@ -11,10 +11,6 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.config.Configuration;
 
-/**
- * Handle events for all Player related events
- * @author N4th4
- */
 public class NuxKitsPlayerListener extends PlayerListener {
     private final NuxKits plugin;
     private Configuration config;
