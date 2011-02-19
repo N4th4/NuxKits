@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="NuxKits" basedir="." default="jar">
+
+	<!-- les propriétés -->
+	<!--<property file="build.properties"/>-->
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="dist.dir" value="jar" />
+
+	<!-- target qui supprime les classes compilées et le JAR -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<!-- target qui compile le code Java dans le répertoire build -->
+	<target name="compile">
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+			<!--<compilerarg value="-Xlint:deprecation" />-->
+			<classpath>
+				<pathelement path="${classpath}" />
+				<fileset dir="../lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+		<copy file="src/plugin.yml" todir="build/" />
+	</target>
+
+	<!-- target qui crée le JAR -->
+	<target name="jar" depends="clean,compile">
+		<mkdir dir="${dist.dir}" />
+		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}" />
+	</target>
+</project>
