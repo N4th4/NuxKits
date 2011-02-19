@@ -22,17 +22,20 @@ public class NuxKits extends JavaPlugin {
         playerListener = new NuxKitsPlayerListener(this);
         debugees = new HashMap<Player, Boolean>();
     }
+
     public void onEnable() {
-    	NuxKitsPermissions.initialize(getServer());
-    	
+        NuxKitsPermissions.initialize(getServer());
+
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvent(Event.Type.PLAYER_COMMAND,  playerListener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_COMMAND, playerListener, Priority.Normal, this);
 
         PluginDescriptionFile pdfFile = this.getDescription();
-        NuxKitsLogger.info( pdfFile.getName() + " version " + pdfFile.getVersion() + " est activé !" );
+        NuxKitsLogger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " est activé !");
     }
+
     public void onDisable() {
     }
+
     public boolean isDebugging(final Player player) {
         if (debugees.containsKey(player)) {
             return debugees.get(player);
@@ -40,6 +43,7 @@ public class NuxKits extends JavaPlugin {
             return false;
         }
     }
+
     public void setDebugging(final Player player, final boolean value) {
         debugees.put(player, value);
     }
