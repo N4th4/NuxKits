@@ -1,14 +1,11 @@
 package com.bukkit.N4th4.NuxKits;
 
-import java.io.File;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
-import org.bukkit.Server;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
 
@@ -16,8 +13,7 @@ public class NuxKits extends JavaPlugin {
     private final NuxKitsPlayerListener playerListener;
     private final HashMap<Player, Boolean> debugees;
 
-    public NuxKits(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) {
-        super(pluginLoader, instance, desc, folder, plugin, cLoader);
+    public NuxKits() {
         NuxKitsLogger.initialize();
         playerListener = new NuxKitsPlayerListener(this);
         debugees = new HashMap<Player, Boolean>();
