@@ -10,23 +10,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
 
 public class NuxKits extends JavaPlugin {
-    private final NuxKitsPlayerListener playerListener;
+    private final NKPlayerListener playerListener;
     private final HashMap<Player, Boolean> debugees;
 
     public NuxKits() {
-        NuxKitsLogger.initialize();
-        playerListener = new NuxKitsPlayerListener(this);
+        NKLogger.initialize();
+        playerListener = new NKPlayerListener(this);
         debugees = new HashMap<Player, Boolean>();
     }
 
     public void onEnable() {
-        NuxKitsPermissions.initialize(getServer());
+        NKPermissions.initialize(getServer());
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.PLAYER_COMMAND, playerListener, Priority.Normal, this);
 
         PluginDescriptionFile pdfFile = this.getDescription();
-        NuxKitsLogger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " est activé !");
+        NKLogger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " est activé !");
     }
 
     public void onDisable() {

@@ -3,7 +3,7 @@ package com.bukkit.N4th4.NuxKits;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-public class NuxKitsLogger {
+public class NKLogger {
     private static Logger log;
 
     public static void initialize() {

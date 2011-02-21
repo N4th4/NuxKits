@@ -6,7 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.nijikokun.bukkit.Permissions.Permissions;
 
-public class NuxKitsPermissions {
+public class NKPermissions {
     private static Permissions permissions;
 
     public static void initialize(Server server) {
@@ -14,9 +14,9 @@ public class NuxKitsPermissions {
 
         if (test != null) {
             permissions = (Permissions) test;
-            NuxKitsLogger.info("Plug-in Permission trouvé.");
+            NKLogger.info("Plug-in Permission trouvé.");
         } else {
-            NuxKitsLogger.severe("Plug-in Permission non trouvé.");
+            NKLogger.severe("Plug-in Permission non trouvé.");
         }
     }
 
