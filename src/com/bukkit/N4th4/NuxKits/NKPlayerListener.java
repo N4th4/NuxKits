@@ -89,19 +89,18 @@ public class NKPlayerListener extends PlayerListener {
     }
 
     private void loadConfig() {
-        File configFile = new File("plugins/NuxNoob/config.yml");
+        File configFile = new File("plugins/NuxKits/config.yml");
         if (configFile.exists()) {
             config = new Configuration(configFile);
             config.load();
         } else {
-            NKLogger.severe("Fichier de configuration non trouvé : plugins/NuxNoob/config.yml");
+            NKLogger.severe("Fichier de configuration non trouvé : plugins/NuxKits/config.yml");
         }
     }
 
     private void listKits(Player sender) {
         sender.sendMessage(ChatColor.RED + "Kits :");
         ArrayList<String> kitsList = (ArrayList<String>) config.getKeys("kits");
-        System.out.println(kitsList);
         for (int i = 0; i < kitsList.size(); i++) {
             sender.sendMessage(ChatColor.RED + "    " + kitsList.get(i));
         }
