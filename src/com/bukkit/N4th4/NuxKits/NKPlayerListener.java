@@ -80,11 +80,12 @@ public class NKPlayerListener extends PlayerListener {
                         NKLogger.severe("Matériel invalide : " + materialsList.get(i));
                     }
                 }
+                sender.sendMessage(ChatColor.RED + "[NuxKits] Le kit " + kit + " a été donné à " + reciver);
             } else {
-                sender.sendMessage("[NuxKits] Le kit " + kit + " n'existe pas");
+                sender.sendMessage(ChatColor.RED + "[NuxKits] Le kit " + kit + " n'existe pas");
             }
         } else {
-            sender.sendMessage("[NuxKits] Le joueur " + reciver + " n'est pas en ligne");
+            sender.sendMessage(ChatColor.RED + "[NuxKits] Le joueur " + reciver + " n'est pas en ligne");
         }
     }
 
