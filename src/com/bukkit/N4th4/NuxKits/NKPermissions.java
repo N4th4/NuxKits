@@ -14,9 +14,8 @@ public class NKPermissions {
 
         if (test != null) {
             permissions = (Permissions) test;
-            NKLogger.info("Plug-in Permission trouvé.");
         } else {
-            NKLogger.severe("Plug-in Permission non trouvé.");
+            NKLogger.severe("Plugin Permission not found");
         }
     }
 

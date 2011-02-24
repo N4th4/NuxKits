@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
 
@@ -24,9 +23,6 @@ public class NuxKits extends JavaPlugin {
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.PLAYER_COMMAND, playerListener, Priority.Normal, this);
-
-        PluginDescriptionFile pdfFile = this.getDescription();
-        NKLogger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " est activé !");
     }
 
     public void onDisable() {
