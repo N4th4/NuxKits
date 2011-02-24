@@ -80,7 +80,8 @@ public class NKPlayerListener extends PlayerListener {
                         NKLogger.severe("Invalid material : " + materialsList.get(i));
                     }
                 }
-                sender.sendMessage(ChatColor.GREEN + "[NuxKits] The kit " + kit + " was given to " + reciver);
+                sender.sendMessage(ChatColor.GREEN + "[NuxKits] The kit \"" + kit + "\" was given to " + reciver);
+                player.sendMessage(ChatColor.GREEN + "[NuxKits] " + sender.getName() + " has given you the kit \""+ kit + "\"");
             } else {
                 sender.sendMessage(ChatColor.RED + "[NuxKits] The kit " + kit + " doesn't exist");
             }
