@@ -40,12 +40,15 @@ public class NuxKits extends JavaPlugin {
                     help(player);
                 } else {
                     if (args[0].equalsIgnoreCase("give")) {
-                        if (args.length != 3) {
-                            sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits give [kit] [joueur]");
+                        if (args.length != 2 && args.length != 3) {
+                            sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits give [kit] <joueur>");
                         } else if (!NKPermissions.has(player, "nuxkits.give." + args[1])) {
                             sender.sendMessage(ChatColor.RED + "[NuxKits] Permission denied");
                         } else {
-                            giveKit(args[1], args[2], player);
+                            if (args.length == 2)
+                                giveKit(args[1], player.getName(), player);
+                            else if (args.length == 3)
+                                giveKit(args[1], args[2], player);
                         }
                     } else if (args[0].equalsIgnoreCase("reload")) {
                         if (args.length != 1) {
@@ -79,16 +82,9 @@ public class NuxKits extends JavaPlugin {
             }
             return true;
         } else {
+            sender.sendMessage("[NuxKits] Only commands in chat are supported");
             return true;
         }
-    }
-
-    private void help(Player sender) {
-        sender.sendMessage(ChatColor.AQUA + "Commands :");
-        sender.sendMessage(ChatColor.AQUA + "    /NuxKits give [kit] [joueur]");
-        sender.sendMessage(ChatColor.AQUA + "    /NuxKits help");
-        sender.sendMessage(ChatColor.AQUA + "    /NuxKits reload");
-        sender.sendMessage(ChatColor.AQUA + "    /NuxKits listKits");
     }
 
     public boolean isDebugging(final Player player) {
@@ -115,13 +111,17 @@ public class NuxKits extends JavaPlugin {
                         NKLogger.severe("Invalid material : " + materialsList.get(i));
                     }
                 }
-                sender.sendMessage(ChatColor.GREEN + "[NuxKits] The kit \"" + kit + "\" was given to " + reciver);
-                player.sendMessage(ChatColor.GREEN + "[NuxKits] " + sender.getName() + " has given you the kit \"" + kit + "\"");
+                if (sender.getName().equals(reciver)) {
+                    sender.sendMessage(ChatColor.GREEN + "[NuxKits] You've given yourself the kit \"" + kit + "\"");
+                } else {
+                    sender.sendMessage(ChatColor.GREEN + "[NuxKits] The kit \"" + kit + "\" was given to " + reciver);
+                    player.sendMessage(ChatColor.GREEN + "[NuxKits] " + sender.getName() + " has given you the kit \"" + kit + "\"");
+                }
             } else {
                 sender.sendMessage(ChatColor.RED + "[NuxKits] The kit " + kit + " doesn't exist");
             }
         } else {
-            sender.sendMessage(ChatColor.RED + "[NuxKits] The player " + reciver + " is unknown");
+            sender.sendMessage(ChatColor.RED + "[NuxKits] Unknown player \"" + reciver + "\"");
         }
     }
 
@@ -133,6 +133,14 @@ public class NuxKits extends JavaPlugin {
         } else {
             NKLogger.severe("File not found : plugins/NuxKits/config.yml");
         }
+    }
+
+    private void help(Player sender) {
+        sender.sendMessage(ChatColor.AQUA + "Commands :");
+        sender.sendMessage(ChatColor.AQUA + "    /NuxKits give [kit] [joueur]");
+        sender.sendMessage(ChatColor.AQUA + "    /NuxKits help");
+        sender.sendMessage(ChatColor.AQUA + "    /NuxKits reload");
+        sender.sendMessage(ChatColor.AQUA + "    /NuxKits listKits");
     }
 
     private void listKits(Player sender) {
