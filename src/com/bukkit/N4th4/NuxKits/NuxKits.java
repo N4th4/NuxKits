@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
@@ -23,8 +24,11 @@ public class NuxKits extends JavaPlugin {
     }
 
     public void onEnable() {
-        NKPermissions.initialize(getServer());
+        NKPermissions.initialize(this);
         loadConfig();
+
+        PluginDescriptionFile pdfFile = this.getDescription();
+        NKLogger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
     }
 
     public void onDisable() {
@@ -99,29 +103,29 @@ public class NuxKits extends JavaPlugin {
         debugees.put(player, value);
     }
 
-    private void giveKit(String kit, String reciver, Player sender) {
-        Player player = getServer().getPlayer(reciver);
+    private void giveKit(String kit, String receiver, Player sender) {
+        Player player = getServer().getPlayer(receiver);
         if (player != null) {
             ArrayList<String> materialsList = (ArrayList<String>) config.getKeys("kits." + kit);
             if (materialsList != null) {
                 for (int i = 0; i < materialsList.size(); i++) {
                     try {
-                        getServer().getPlayer(reciver).getInventory().addItem(new ItemStack(Material.valueOf(materialsList.get(i)), config.getInt("kits." + kit + "." + materialsList.get(i), 0)));
+                        getServer().getPlayer(receiver).getInventory().addItem(new ItemStack(Material.valueOf(materialsList.get(i)), config.getInt("kits." + kit + "." + materialsList.get(i), 0)));
                     } catch (IllegalArgumentException e) {
                         NKLogger.severe("Invalid material : " + materialsList.get(i));
                     }
                 }
-                if (sender.getName().equals(reciver)) {
+                if (sender.getName().equals(receiver)) {
                     sender.sendMessage(ChatColor.GREEN + "[NuxKits] You've given yourself the kit \"" + kit + "\"");
                 } else {
-                    sender.sendMessage(ChatColor.GREEN + "[NuxKits] The kit \"" + kit + "\" was given to " + reciver);
+                    sender.sendMessage(ChatColor.GREEN + "[NuxKits] The kit \"" + kit + "\" was given to " + receiver);
                     player.sendMessage(ChatColor.GREEN + "[NuxKits] " + sender.getName() + " has given you the kit \"" + kit + "\"");
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "[NuxKits] The kit " + kit + " doesn't exist");
             }
         } else {
-            sender.sendMessage(ChatColor.RED + "[NuxKits] Unknown player \"" + reciver + "\"");
+            sender.sendMessage(ChatColor.RED + "[NuxKits] Unknown player \"" + receiver + "\"");
         }
     }
 
