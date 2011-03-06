@@ -6,7 +6,7 @@ NuxKits is a plugin that dispenses kits to players.
 Installation
 ------------
 
-* First, you need the Permissions plugin ([here](http://forums.bukkit.org/threads/admn-info-permissions-v2-0-revolutionizing-the-group-system.1403/)).
+* First, you need the GroupManager plugin ([here](http://forums.bukkit.org/threads/326-490.4723/)).
 * Download the latest jar [here](https://github.com/N4th4/NuxKits/downloads).
 * Copy the downloaded jar file into the plugins folder and rename it to "NuxKits.jar".
 
