@@ -2,6 +2,7 @@ package com.bukkit.N4th4.NuxKits;
 
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.dataholder.worlds.WorldsHolder;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -26,7 +27,12 @@ public class NKPermissions {
         return wd.getWorldPermissionsByPlayerName(playerName).getGroup(playerName);
     }
 
-    public static boolean has(Player player, String string) {
-        return wd.getWorldPermissions(player).has(player, string);
+    public static boolean has(CommandSender player, String string) {
+        if (player instanceof Player) {
+            Player playerBis = (Player) player;
+            return wd.getWorldPermissions(playerBis).has(playerBis, string);
+        } else {
+            return player.isOp();
+        }
     }
 }

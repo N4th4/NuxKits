@@ -1,6 +1,6 @@
 name: NuxKits
 main: com.bukkit.N4th4.NuxKits.NuxKits
-version: 1.3
+version: 1.4
 commands:
     nuxkits:
         description: All of the NuxKits commands

@@ -37,58 +37,58 @@ public class NuxKits extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
         String commandName = command.getName();
-        if (sender instanceof Player) {
-            if (commandName.equalsIgnoreCase("NuxKits")) {
-                Player player = (Player) sender;
-                if (args.length == 0) {
-                    help(player);
-                } else {
-                    if (args[0].equalsIgnoreCase("give")) {
-                        if (args.length != 2 && args.length != 3) {
-                            sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits give [kit] <joueur>");
-                        } else if (!NKPermissions.has(player, "nuxkits.give." + args[1])) {
-                            sender.sendMessage(ChatColor.RED + "[NuxKits] Permission denied");
-                        } else {
-                            if (args.length == 2)
-                                giveKit(args[1], player.getName(), player);
-                            else if (args.length == 3)
-                                giveKit(args[1], args[2], player);
-                        }
-                    } else if (args[0].equalsIgnoreCase("reload")) {
-                        if (args.length != 1) {
-                            sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits reload");
-                        } else if (!NKPermissions.has(player, "nuxkits.reload")) {
-                            sender.sendMessage(ChatColor.RED + "[NuxKits] Permission denied");
-                        } else {
-                            loadConfig();
-                            sender.sendMessage(ChatColor.GREEN + "[NuxKits] File reloaded");
-                        }
-                    } else if (args[0].equalsIgnoreCase("help")) {
-                        if (args.length != 1) {
-                            sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits help");
-                            // } else if (!NKPermissions.has(player, "nuxkits.help")) {
-                            // sender.sendMessage(ChatColor.RED+"[NuxKits] Permission denied");
-                        } else {
-                            help(player);
-                        }
-                    } else if (args[0].equalsIgnoreCase("listKits")) {
-                        if (args.length != 1) {
-                            sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits list");
-                            // } else if (!NKPermissions.has(player, "nuxkits.list")) {
-                            // sender.sendMessage(ChatColor.RED+"[NuxKits] Permission denied");
-                        } else {
-                            listKits(player);
-                        }
+        if (commandName.equalsIgnoreCase("NuxKits")) {
+            if (args.length == 0) {
+                help(sender);
+            } else {
+                if (args[0].equalsIgnoreCase("give")) {
+                    if (args.length != 2 && args.length != 3) {
+                        sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits give [kit] <joueur>");
+                    } else if (!NKPermissions.has(sender, "nuxkits.give." + args[1])) {
+                        sender.sendMessage(ChatColor.RED + "[NuxKits] Permission denied");
                     } else {
-                        sender.sendMessage(ChatColor.RED + "[NuxKits] Unknown command. Type /NuxKits help");
+                        if (args.length == 2) {
+                            if (sender instanceof Player) {
+                                Player senderBis = (Player) sender;
+                                giveKit(args[1], senderBis.getName(), sender);
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "[NuxKits] The receiver is obligatory in console");
+                            }
+                        } else if (args.length == 3) {
+                            giveKit(args[1], args[2], sender);
+                        }
                     }
+                } else if (args[0].equalsIgnoreCase("reload")) {
+                    if (args.length != 1) {
+                        sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits reload");
+                    } else if (!NKPermissions.has(sender, "nuxkits.reload")) {
+                        sender.sendMessage(ChatColor.RED + "[NuxKits] Permission denied");
+                    } else {
+                        loadConfig();
+                        sender.sendMessage(ChatColor.GREEN + "[NuxKits] File reloaded");
+                    }
+                } else if (args[0].equalsIgnoreCase("help")) {
+                    if (args.length != 1) {
+                        sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits help");
+                        // } else if (!NKPermissions.has(sender, "nuxkits.help")) {
+                        // sender.sendMessage(ChatColor.RED+"[NuxKits] Permission denied");
+                    } else {
+                        help(sender);
+                    }
+                } else if (args[0].equalsIgnoreCase("list")) {
+                    if (args.length != 1) {
+                        sender.sendMessage(ChatColor.RED + "[NuxKits] Usage : /NuxKits list");
+                        // } else if (!NKPermissions.has(sender, "nuxkits.list")) {
+                        // sender.sendMessage(ChatColor.RED+"[NuxKits] Permission denied");
+                    } else {
+                        listKits(sender);
+                    }
+                } else {
+                    sender.sendMessage(ChatColor.RED + "[NuxKits] Unknown command. Type /NuxKits help");
                 }
             }
-            return true;
-        } else {
-            sender.sendMessage("[NuxKits] Only commands in chat are supported");
-            return true;
         }
+        return true;
     }
 
     public boolean isDebugging(final Player player) {
@@ -103,7 +103,7 @@ public class NuxKits extends JavaPlugin {
         debugees.put(player, value);
     }
 
-    private void giveKit(String kit, String receiver, Player sender) {
+    private void giveKit(String kit, String receiver, CommandSender sender) {
         Player player = getServer().getPlayer(receiver);
         if (player != null) {
             ArrayList<String> materialsList = (ArrayList<String>) config.getKeys("kits." + kit);
@@ -115,12 +115,13 @@ public class NuxKits extends JavaPlugin {
                         NKLogger.severe("Invalid material : " + materialsList.get(i));
                     }
                 }
-                if (sender.getName().equals(receiver)) {
-                    sender.sendMessage(ChatColor.GREEN + "[NuxKits] You've given yourself the kit \"" + kit + "\"");
-                } else {
+                // TODO : implement that
+                //if (sender.getName().equals(receiver)) {
+                //    sender.sendMessage(ChatColor.GREEN + "[NuxKits] You've given yourself the kit \"" + kit + "\"");
+                //} else {
                     sender.sendMessage(ChatColor.GREEN + "[NuxKits] The kit \"" + kit + "\" was given to " + receiver);
-                    player.sendMessage(ChatColor.GREEN + "[NuxKits] " + sender.getName() + " has given you the kit \"" + kit + "\"");
-                }
+                    player.sendMessage(ChatColor.GREEN + "[NuxKits] You was given you the kit \"" + kit + "\"");
+                //}
             } else {
                 sender.sendMessage(ChatColor.RED + "[NuxKits] The kit " + kit + " doesn't exist");
             }
@@ -139,7 +140,7 @@ public class NuxKits extends JavaPlugin {
         }
     }
 
-    private void help(Player sender) {
+    private void help(CommandSender sender) {
         sender.sendMessage(ChatColor.AQUA + "Commands :");
         sender.sendMessage(ChatColor.AQUA + "    /NuxKits give [kit] <joueur>");
         sender.sendMessage(ChatColor.AQUA + "    /NuxKits help");
@@ -147,7 +148,7 @@ public class NuxKits extends JavaPlugin {
         sender.sendMessage(ChatColor.AQUA + "    /NuxKits list");
     }
 
-    private void listKits(Player sender) {
+    private void listKits(CommandSender sender) {
         sender.sendMessage(ChatColor.AQUA + "Kits :");
         ArrayList<String> kitsList = (ArrayList<String>) config.getKeys("kits");
         for (int i = 0; i < kitsList.size(); i++) {
