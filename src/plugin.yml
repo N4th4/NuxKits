@@ -1,6 +1,8 @@
 name: NuxKits
 main: com.bukkit.N4th4.NuxKits.NuxKits
-version: 1.4
+version: 1.5
+depend:
+    - PermissionsEx
 commands:
     nuxkits:
         description: All of the NuxKits commands
