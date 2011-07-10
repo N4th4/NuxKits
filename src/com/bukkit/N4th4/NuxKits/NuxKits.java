@@ -10,29 +10,25 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
-import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class NuxKits extends JavaPlugin {
     private Configuration                  config      = null;
     private final HashMap<Player, Boolean> debugees    = new HashMap<Player, Boolean>();
-    public PermissionManager               permissions = null;
+    public PermissionHandler               permissions = null;
 
     public NuxKits() {
         NKLogger.initialize();
     }
 
     public void onEnable() {
-        if (this.getServer().getPluginManager().isPluginEnabled("PermissionsEx")) {
-            permissions = PermissionsEx.getPermissionManager();
-        } else {
-            NKLogger.severe("PermissionsEx not found. Disabling");
-            this.getServer().getPluginManager().disablePlugin(this);
-        }
+        setupPermissions();
 
         loadConfig();
 
@@ -116,6 +112,21 @@ public class NuxKits extends JavaPlugin {
 
     public void setDebugging(final Player player, final boolean value) {
         debugees.put(player, value);
+    }
+    
+    private void setupPermissions() {
+    	if (permissions != null) {
+            return;
+        }
+        
+        Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
+        
+        if (permissionsPlugin == null) {
+            NKLogger.severe("Permissions not found");
+            return;
+        }
+        
+        permissions = ((Permissions) permissionsPlugin).getHandler();
     }
 
     private void giveKit(String kit, String receiver, CommandSender sender) {
